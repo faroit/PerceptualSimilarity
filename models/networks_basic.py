@@ -7,7 +7,7 @@ from pdb import set_trace as st
 from util import util
 from skimage import color
 from IPython import embed
-import pretrained_networks as pn
+from . import pretrained_networks as pn
 
 # Off-the-shelf deep network
 class PNet(nn.Module):
@@ -194,7 +194,7 @@ class L2(FakeNet):
             value = torch.mean(torch.mean(torch.mean((in0-in1)**2,dim=1).view(N,1,X,Y),dim=2).view(N,1,1,Y),dim=3).view(N)
             return value
         elif(self.colorspace=='Lab'):
-            value = util.l2(util.tensor2np(util.tensor2tensorlab(in0.data,to_norm=False)), 
+            value = util.l2(util.tensor2np(util.tensor2tensorlab(in0.data,to_norm=False)),
                 util.tensor2np(util.tensor2tensorlab(in1.data,to_norm=False)), range=100.).astype('float')
             ret_var = Variable( torch.Tensor((value,) ) )
             if(self.use_gpu):
@@ -209,7 +209,7 @@ class DSSIM(FakeNet):
         if(self.colorspace=='RGB'):
             value = util.dssim(1.*util.tensor2im(in0.data), 1.*util.tensor2im(in1.data), range=255.).astype('float')
         elif(self.colorspace=='Lab'):
-            value = util.dssim(util.tensor2np(util.tensor2tensorlab(in0.data,to_norm=False)), 
+            value = util.dssim(util.tensor2np(util.tensor2tensorlab(in0.data,to_norm=False)),
                 util.tensor2np(util.tensor2tensorlab(in1.data,to_norm=False)), range=100.).astype('float')
         ret_var = Variable( torch.Tensor((value,) ) )
         if(self.use_gpu):

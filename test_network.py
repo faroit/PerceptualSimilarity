@@ -8,7 +8,7 @@ model = dm.DistModel()
 
 # Linearly calibrated models
 # model.initialize(model='net-lin',net='squeeze',use_gpu=True)
-model.initialize(model='net-lin',net='alex',use_gpu=True)
+model.initialize(model='net-lin',net='alex',use_gpu=False)
 # model.initialize(model='net-lin',net='vgg',use_gpu=True)
 
 # Off-the-shelf uncalibrated networks
